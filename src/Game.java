@@ -3,17 +3,15 @@ import java.awt.image.BufferStrategy;
 import java.nio.Buffer;
 
 public class Game extends Canvas implements Runnable {
-
-    private final int NUM_BUFFERS = 3;
-    private final int WIDTH = 800;
-    private final int HEIGHT = 600;
-    private final String TITLE = "Your Game Title";
+    
     private final Window mWindow;
     private Thread mThread;
     private boolean mIsRunning = false;
+    private int mNumBuffers = 3;
 
-    public Game() {
-        mWindow = new Window(new Dimension(WIDTH, HEIGHT), TITLE, this);
+    public Game(IGameWindowProperties windowProperties) {
+        mNumBuffers = windowProperties.getNumBuffers();
+        mWindow = new Window(new Dimension(windowProperties.getWidth(), windowProperties.getHeight()), windowProperties.getTitle(), this);
         start();
     }
 
@@ -71,7 +69,7 @@ public class Game extends Canvas implements Runnable {
     private void Render() {
         BufferStrategy bufferStrategy = getBufferStrategy();
         if(bufferStrategy == null) {
-            createBufferStrategy(NUM_BUFFERS);
+            createBufferStrategy(mNumBuffers);
             return;
         }
         Graphics graphicsDevice = bufferStrategy.getDrawGraphics();
@@ -80,9 +78,4 @@ public class Game extends Canvas implements Runnable {
         bufferStrategy.show();
         graphicsDevice.dispose();
     }
-
-    public static void main(String args[]) {
-        new Game();
-    }
-
 }
