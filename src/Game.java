@@ -3,7 +3,7 @@ import java.awt.image.BufferStrategy;
 import java.nio.Buffer;
 
 public class Game extends Canvas implements Runnable {
-    
+
     private final Window mWindow;
     private Thread mThread;
     private boolean mIsRunning = false;
