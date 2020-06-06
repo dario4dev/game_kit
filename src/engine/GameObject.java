@@ -1,5 +1,7 @@
 package engine;
 
+import engine.systems.GameObjectHandlerSystem;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
@@ -12,6 +14,14 @@ public abstract class GameObject {
     public GameObject(final GameObjectTag gameObjectTag) {
         mGameObjectTag = gameObjectTag;
         mTransform = new Transform();
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
+        gameObjectHandlerSystem.Add(this);
+    }
+
+    protected void finalize()
+    {
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
+        gameObjectHandlerSystem.Remove(this);
     }
 
     public boolean isEnabled() {
