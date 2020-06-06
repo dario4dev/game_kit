@@ -7,8 +7,10 @@ public abstract class GameObject {
 
     private boolean mIsEnabled = true;
     private Transform mTransform = null;
+    private GameObjectTag mGameObjectTag;
 
-    public GameObject() {
+    public GameObject(final GameObjectTag gameObjectTag) {
+        mGameObjectTag = gameObjectTag;
         mTransform = new Transform();
     }
 
@@ -18,6 +20,10 @@ public abstract class GameObject {
 
     public void setEnabled(boolean value) {
         mIsEnabled = value;
+    }
+
+    public GameObjectTag GetGameObjectTag() {
+        return mGameObjectTag;
     }
 
     public void onUpdate(final double deltaTime) {

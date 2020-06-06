@@ -1,8 +1,11 @@
+import engine.Engine;
+import engine.systems.GameObjectHandlerSystem;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.nio.Buffer;
 
-public class Game extends Canvas implements Runnable {
+public abstract class Game extends Canvas implements Runnable {
 
     private final Window mWindow;
     private Thread mThread;
@@ -12,7 +15,18 @@ public class Game extends Canvas implements Runnable {
     public Game(IGameWindowProperties windowProperties) {
         mNumBuffers = windowProperties.getNumBuffers();
         mWindow = new Window(new Dimension(windowProperties.getWidth(), windowProperties.getHeight()), windowProperties.getTitle(), this);
+    }
+
+    public abstract void InitialiseSystems();
+    public abstract void DeinitialiseSystems();
+    public abstract void InitialiseComponents();
+    public abstract void DeinitialiseComponents();
+
+    public void Start() {
         start();
+    }
+    public void Stop() {
+        stop();
     }
 
     private synchronized void start() {
@@ -49,7 +63,7 @@ public class Game extends Canvas implements Runnable {
             delta += (currentFrameTime - previousFrameTime) / ns;
             previousFrameTime = currentFrameTime;
             while(delta >= 1) {
-                Update();
+                Update(delta);
                 --delta;
             }
             Render();
@@ -62,8 +76,9 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
-    private void Update() {
-
+    private void Update(final double deltaTime) {
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
+        gameObjectHandlerSystem.Update(deltaTime);
     }
 
     private void Render() {
@@ -73,7 +88,8 @@ public class Game extends Canvas implements Runnable {
             return;
         }
         Graphics graphicsDevice = bufferStrategy.getDrawGraphics();
-
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
+        gameObjectHandlerSystem.Render(graphicsDevice);
 
         bufferStrategy.show();
         graphicsDevice.dispose();
