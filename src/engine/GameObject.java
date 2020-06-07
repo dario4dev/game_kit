@@ -9,10 +9,14 @@ public abstract class GameObject {
 
     private boolean mIsEnabled = true;
     private Transform mTransform = null;
-    private GameObjectTag mGameObjectTag;
+    private GameObjectTag mGameObjectTag = null;
 
-    public GameObject(final GameObjectTag gameObjectTag) {
-        mGameObjectTag = gameObjectTag;
+    public GameObject() {
+        //Create unique tag per Class type
+        String classId = String.valueOf(this);
+        String[] parts = classId.split("@");
+        mGameObjectTag = new GameObjectTag(parts[0]);
+
         mTransform = new Transform();
         GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
         gameObjectHandlerSystem.Add(this);

@@ -1,13 +1,12 @@
 import engine.Engine;
+import engine.EngineInitialiser;
 import engine.systems.GameObjectHandlerSystem;
 
 public class Main {
     public static void main(String args[]) {
 
         //Initialise Engine
-        Engine.Get();
-        //Initialise Engine Systems
-        Engine.Get().AddSystem(new GameObjectHandlerSystem());
+        EngineInitialiser.Init();
 
         //Initialise game
         YourGame yourGame = new YourGame(new YourGameWindowProperties());
