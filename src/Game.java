@@ -1,5 +1,6 @@
 import engine.Engine;
 import engine.systems.GameObjectHandlerSystem;
+import engine.systems.InputSystem;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -15,6 +16,8 @@ public abstract class Game extends Canvas implements Runnable {
     public Game(IGameWindowProperties windowProperties) {
         mNumBuffers = windowProperties.getNumBuffers();
         mWindow = new Window(new Dimension(windowProperties.getWidth(), windowProperties.getHeight()), windowProperties.getTitle(), this);
+        InputSystem inputSystem = Engine.Get().GetSystem(InputSystem.GetSystemId());
+        mWindow.mframe.addKeyListener(inputSystem);
     }
 
     public abstract void InitialiseSystems();
