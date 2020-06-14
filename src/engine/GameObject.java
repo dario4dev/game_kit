@@ -52,6 +52,10 @@ public abstract class GameObject {
         }
     }
 
+    public Transform GetTransform() {
+        return mTransform;
+    }
+
     protected abstract void update(final double deltaTime);
     protected abstract void render(final Graphics graphicsDevice);
 }
