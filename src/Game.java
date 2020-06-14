@@ -101,9 +101,7 @@ public abstract class Game extends Canvas implements Runnable {
             return;
         }
         Graphics graphicsDevice = bufferStrategy.getDrawGraphics();
-        graphicsDevice.drawRect(0,0, GetScreenScreenWidth(), GetScreenScreenHeight());
-        graphicsDevice.fillRect(0,0, GetScreenScreenWidth(), GetScreenScreenHeight());
-
+        graphicsDevice.clearRect(0,0, GetScreenScreenWidth(), GetScreenScreenHeight());
         GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
         gameObjectHandlerSystem.Render(graphicsDevice);
 
