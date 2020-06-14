@@ -25,8 +25,10 @@ public class GameObjectHandlerSystem extends System {
         if(gameObjectArray == null) {
             gameObjectArray = new LinkedList<GameObject>();
             mGameObjectsMap.put(gameObject.GetGameObjectTag(), gameObjectArray);
+            gameObjectArray.add(gameObject);
+        } else if(!gameObjectArray.contains(gameObject)) {
+            gameObjectArray.add(gameObject);
         }
-        gameObjectArray.add(gameObject);
     }
 
     public void Remove(GameObject gameObject) {
@@ -34,7 +36,9 @@ public class GameObjectHandlerSystem extends System {
         if(gameObjectArray == null) {
            return;
         }
+
         gameObjectArray.remove(gameObject);
+
         if(gameObjectArray.isEmpty()) {
             mGameObjectsMap.remove(gameObject.GetGameObjectTag());
         }

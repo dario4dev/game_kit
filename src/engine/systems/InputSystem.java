@@ -29,8 +29,9 @@ public class InputSystem extends System implements KeyListener {
         LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(event);
         if(inputListeners == null) {
             inputListeners = new LinkedList<InputListener>();
-        }
-        if(!inputListeners.contains(listener)) {
+            inputListeners.add(listener);
+            mGameObjectsInputMap.put(event, inputListeners);
+        } else if(!inputListeners.contains(listener)) {
             inputListeners.add(listener);
         }
     }
@@ -46,10 +47,8 @@ public class InputSystem extends System implements KeyListener {
         if(inputListeners == null) {
             return;
         }
-        final int index = inputListeners.indexOf(listener);
-        if(index != -1) {
-            inputListeners.remove(listener);
-        }
+
+        inputListeners.remove(listener);
 
         if(inputListeners.isEmpty()) {
             mGameObjectsInputMap.remove(inputListeners);
