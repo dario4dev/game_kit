@@ -36,19 +36,19 @@ public class Transform {
     }
 
     public void setPosition(final double x, final double y) {
-        mAffineTransform.setToTranslation(x, y);
+        mAffineTransform.translate(x, y);
     }
 
     public void setPositionX(final double x) {
-        mAffineTransform.setToTranslation(x, mAffineTransform.getTranslateY());
+        mAffineTransform.translate(x, mAffineTransform.getTranslateY());
     }
 
     public void setPositionY(final double y) {
-        mAffineTransform.setToTranslation(mAffineTransform.getTranslateX(), y);
+        mAffineTransform.translate(mAffineTransform.getTranslateX(), y);
     }
 
     public void setPosition(final ArrayList<Double> position2D) {
-        mAffineTransform.setToTranslation(position2D.get(DIMENSION_2D.X), position2D.get(DIMENSION_2D.Y));
+        mAffineTransform.translate(position2D.get(DIMENSION_2D.X), position2D.get(DIMENSION_2D.Y));
     }
 
     //Getter setter Scale
@@ -67,19 +67,19 @@ public class Transform {
     }
 
     public void setScale(final Double x, final Double y) {
-        mAffineTransform.setToScale(x, y);
+        mAffineTransform.scale(x, y);
     }
 
     public void setScaleX(final Double x) {
-        mAffineTransform.setToScale(x, mAffineTransform.getScaleY());
+        mAffineTransform.scale(x, mAffineTransform.getScaleY());
     }
 
     public void setScaleY(final Double y) {
-        mAffineTransform.setToScale(mAffineTransform.getScaleX(), y);
+        mAffineTransform.scale(mAffineTransform.getScaleX(), y);
     }
 
     public void setScale(final ArrayList<Double> scale2D) {
-        mAffineTransform.setToScale(scale2D.get(DIMENSION_2D.X), scale2D.get(DIMENSION_2D.Y));
+        mAffineTransform.scale(scale2D.get(DIMENSION_2D.X), scale2D.get(DIMENSION_2D.Y));
     }
 
     //Getter/Setter Rotations Todo @Dario later.
