@@ -3,7 +3,6 @@ package engine;
 import engine.systems.GameObjectHandlerSystem;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 
 public abstract class GameObject {
 
@@ -28,11 +27,11 @@ public abstract class GameObject {
         gameObjectHandlerSystem.Remove(this);
     }
 
-    public boolean isEnabled() {
+    public boolean IsEnabled() {
         return mIsEnabled;
     }
 
-    public void setEnabled(boolean value) {
+    public void SetEnabled(boolean value) {
         mIsEnabled = value;
     }
 
@@ -40,15 +39,15 @@ public abstract class GameObject {
         return mGameObjectTag;
     }
 
-    public void onUpdate(final double deltaTime) {
+    public void OnUpdate(final double deltaTime) {
         if(mIsEnabled) {
-            update(deltaTime);
+            Update(deltaTime);
         }
     }
 
-    public void onRender(final Graphics graphicsDevice) {
+    public void OnRender(final Graphics graphicsDevice) {
         if(mIsEnabled) {
-            render(graphicsDevice);
+            Render(graphicsDevice);
         }
     }
 
@@ -56,6 +55,6 @@ public abstract class GameObject {
         return mTransform;
     }
 
-    protected abstract void update(final double deltaTime);
-    protected abstract void render(final Graphics graphicsDevice);
+    protected abstract void Update(final double deltaTime);
+    protected abstract void Render(final Graphics graphicsDevice);
 }

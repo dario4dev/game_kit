@@ -20,65 +20,65 @@ public class Transform {
     }
 
     // Getter/Setter Translation
-    public ArrayList<Double> getPosition2D() {
+    public ArrayList<Double> GetPosition2D() {
         mPosition2D.set(DIMENSION_2D.X, mAffineTransform.getTranslateX());
         mPosition2D.set(DIMENSION_2D.Y, mAffineTransform.getTranslateY());
 
         return mPosition2D;
     }
 
-    public Double getPositionX() {
+    public Double GetPositionX() {
         return mAffineTransform.getTranslateX();
     }
 
-    public Double getPositionY() {
+    public Double GetPositionY() {
         return mAffineTransform.getTranslateY();
     }
 
-    public void setPosition(final double x, final double y) {
+    public void SetPosition(final double x, final double y) {
         mAffineTransform.translate(x, y);
     }
 
-    public void setPositionX(final double x) {
+    public void SetPositionX(final double x) {
         mAffineTransform.translate(x, mAffineTransform.getTranslateY());
     }
 
-    public void setPositionY(final double y) {
+    public void SetPositionY(final double y) {
         mAffineTransform.translate(mAffineTransform.getTranslateX(), y);
     }
 
-    public void setPosition(final ArrayList<Double> position2D) {
+    public void SetPosition(final ArrayList<Double> position2D) {
         mAffineTransform.translate(position2D.get(DIMENSION_2D.X), position2D.get(DIMENSION_2D.Y));
     }
 
     //Getter setter Scale
-    public ArrayList<Double> getScale() {
+    public ArrayList<Double> GetScale() {
         mScale2D.set(DIMENSION_2D.X, mAffineTransform.getScaleX());
         mScale2D.set(DIMENSION_2D.Y, mAffineTransform.getScaleY());
         return mScale2D;
     }
 
-    public Double getScaleX() {
+    public Double GetScaleX() {
         return mAffineTransform.getScaleX();
     }
 
-    public Double getScaleY() {
+    public Double GetScaleY() {
         return mAffineTransform.getScaleY();
     }
 
-    public void setScale(final Double x, final Double y) {
+    public void SetScale(final Double x, final Double y) {
         mAffineTransform.scale(x, y);
     }
 
-    public void setScaleX(final Double x) {
+    public void SetScaleX(final Double x) {
         mAffineTransform.scale(x, mAffineTransform.getScaleY());
     }
 
-    public void setScaleY(final Double y) {
+    public void SetScaleY(final Double y) {
         mAffineTransform.scale(mAffineTransform.getScaleX(), y);
     }
 
-    public void setScale(final ArrayList<Double> scale2D) {
+    public void SetScale(final ArrayList<Double> scale2D) {
         mAffineTransform.scale(scale2D.get(DIMENSION_2D.X), scale2D.get(DIMENSION_2D.Y));
     }
 

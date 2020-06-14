@@ -1,8 +1,6 @@
 package engine.systems;
-import engine.Engine;
 import engine.GameObject;
 import engine.GameObjectTag;
-import engine.systems.System;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -45,7 +43,7 @@ public class GameObjectHandlerSystem extends System {
     public void Update(final double deltaTime) {
         for( LinkedList<GameObject> gameObjectArray : mGameObjectsMap.values()) {
             for(GameObject gameObject : gameObjectArray) {
-                gameObject.onUpdate(deltaTime);
+                gameObject.OnUpdate(deltaTime);
             }
         }
     }
@@ -53,7 +51,7 @@ public class GameObjectHandlerSystem extends System {
     public void Render(final Graphics graphicsDevice) {
         for( LinkedList<GameObject> gameObjectArray : mGameObjectsMap.values()) {
             for(GameObject gameObject : gameObjectArray) {
-                gameObject.onRender(graphicsDevice);
+                gameObject.OnRender(graphicsDevice);
             }
         }
     }

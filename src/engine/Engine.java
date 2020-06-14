@@ -29,9 +29,13 @@ public class Engine {
         }
     }
 
-    public <T extends System> void RemoveSystem(final int id) {
+    public void RemoveSystem(final int id) {
         if (mSystems.containsKey(id)) {
             mSystems.remove(id);
         }
+    }
+
+    public void RemoveAllSystems() {
+        mSystems.clear();
     }
 }
