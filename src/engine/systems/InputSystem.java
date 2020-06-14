@@ -62,7 +62,7 @@ public class InputSystem extends System implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e);
+        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e.getKeyCode());
         if(inputListeners != null) {
             for(InputListener inputListener : inputListeners) {
                 inputListener.KeyPressed(e.getKeyCode());
@@ -72,7 +72,7 @@ public class InputSystem extends System implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e);
+        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e.getKeyCode());
         if(inputListeners != null) {
             for(InputListener inputListener : inputListeners) {
                 inputListener.KeyReleased(e.getKeyCode());
