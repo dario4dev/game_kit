@@ -104,7 +104,7 @@ public abstract class Game extends Canvas implements Runnable {
         GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
         gameObjectHandlerSystem.Render(graphicsDevice);
 
-        bufferStrategy.show();
         graphicsDevice.dispose();
+        bufferStrategy.show();
     }
 }
