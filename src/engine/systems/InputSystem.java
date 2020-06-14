@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 public class InputSystem extends System implements KeyListener {
 
-    private HashMap<KeyEvent, LinkedList<InputListener>> mGameObjectsInputMap;
+    private HashMap<Integer, LinkedList<InputListener>> mGameObjectsInputMap;
     private static int mSystemId = "InputSystem".hashCode();
 
     public static int GetSystemId() {
@@ -22,10 +22,10 @@ public class InputSystem extends System implements KeyListener {
 
     public InputSystem() {
         super(mSystemId);
-        mGameObjectsInputMap = new HashMap<KeyEvent, LinkedList<InputListener>>();
+        mGameObjectsInputMap = new HashMap<Integer, LinkedList<InputListener>>();
     }
 
-    public void AddListener(InputListener listener, KeyEvent event) {
+    public void AddListener(InputListener listener, Integer event) {
         LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(event);
         if(inputListeners == null) {
             inputListeners = new LinkedList<InputListener>();
@@ -36,12 +36,12 @@ public class InputSystem extends System implements KeyListener {
     }
 
     public void RemoveListenerFromAllEvents(InputListener listener) {
-        for (HashMap.Entry<KeyEvent, LinkedList<InputListener>> entry : mGameObjectsInputMap.entrySet()) {
+        for (HashMap.Entry<Integer, LinkedList<InputListener>> entry : mGameObjectsInputMap.entrySet()) {
             RemoveListener(listener, entry.getKey());
         }
     }
 
-    public void RemoveListener(InputListener listener, KeyEvent event) {
+    public void RemoveListener(InputListener listener, Integer event) {
         LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(event);
         if(inputListeners == null) {
             return;
@@ -66,7 +66,7 @@ public class InputSystem extends System implements KeyListener {
         LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e);
         if(inputListeners != null) {
             for(InputListener inputListener : inputListeners) {
-                inputListener.KeyPressed(e);
+                inputListener.KeyPressed(e.getKeyCode());
             }
         }
     }
@@ -76,7 +76,7 @@ public class InputSystem extends System implements KeyListener {
         LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e);
         if(inputListeners != null) {
             for(InputListener inputListener : inputListeners) {
-                inputListener.KeyReleased(e);
+                inputListener.KeyReleased(e.getKeyCode());
             }
         }
     }
