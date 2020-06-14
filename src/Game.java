@@ -22,6 +22,13 @@ public abstract class Game extends Canvas implements Runnable {
     public abstract void InitialiseComponents();
     public abstract void DeinitialiseComponents();
 
+    protected int GetScreenScreenWidth() {
+        return mWindow.mframe.getWidth();
+    }
+    protected int GetScreenScreenHeight() {
+        return mWindow.mframe.getHeight();
+    }
+
     public void Start() {
         start();
     }
