@@ -16,8 +16,7 @@ public abstract class Game extends Canvas implements Runnable {
     public Game(IGameWindowProperties windowProperties) {
         mNumBuffers = windowProperties.getNumBuffers();
         mWindow = new Window(new Dimension(windowProperties.getWidth(), windowProperties.getHeight()), windowProperties.getTitle(), this);
-        InputSystem inputSystem = Engine.Get().GetSystem(InputSystem.GetSystemId());
-        mWindow.mframe.addKeyListener(inputSystem);
+
     }
 
     public abstract void InitialiseSystems();
@@ -45,6 +44,8 @@ public abstract class Game extends Canvas implements Runnable {
         mThread = new Thread(this);
         mThread.start();
         mIsRunning = true;
+        InputSystem inputSystem = Engine.Get().GetSystem(InputSystem.GetSystemId());
+        this.addKeyListener(inputSystem);
     }
 
     private  synchronized void stop() {
@@ -56,6 +57,8 @@ public abstract class Game extends Canvas implements Runnable {
             exception.printStackTrace();
         }
         mIsRunning = false;
+        InputSystem inputSystem = Engine.Get().GetSystem(InputSystem.GetSystemId());
+        this.removeKeyListener(inputSystem);
     }
 
     @Override
