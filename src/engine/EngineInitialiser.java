@@ -6,16 +6,16 @@ import engine.systems.InputSystem;
 
 public class EngineInitialiser {
 
-    public static void Init(){
+    public static void init(){
         Engine engine = Engine.Get();
         //Initialise Engine Systems
-        Engine.Get().AddSystem(new GameObjectHandlerSystem());
-        Engine.Get().AddSystem(new InputSystem());
+        Engine.Get().addSystem(new GameObjectHandlerSystem());
+        Engine.Get().addSystem(new InputSystem());
     }
 
-    public static void DeInit() {
+    public static void deInit() {
         Engine engine = Engine.Get();
         //Remove Engine Systems
-        Engine.Get().RemoveAllSystems();
+        Engine.Get().removeAllSystems();
     }
 }

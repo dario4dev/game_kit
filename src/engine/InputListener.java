@@ -1,8 +1,6 @@
 package engine;
 
-import java.awt.event.KeyEvent;
-
 public interface InputListener {
-    public void KeyPressed(Integer inputKey);
-    public void KeyReleased(Integer inputKey);
+    public void keyPressed(Integer inputKey);
+    public void keyReleased(Integer inputKey);
 }

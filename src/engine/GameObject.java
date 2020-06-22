@@ -6,55 +6,55 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-    private boolean mIsEnabled = true;
-    private Transform mTransform = null;
-    private GameObjectTag mGameObjectTag = null;
+    private boolean isEnabled = true;
+    private Transform transform = null;
+    private GameObjectTag gameObjectTag = null;
 
     public GameObject() {
         //Create unique tag per Class type
         String classId = String.valueOf(this);
         String[] parts = classId.split("@");
-        mGameObjectTag = new GameObjectTag(parts[0]);
+        gameObjectTag = new GameObjectTag(parts[0]);
 
-        mTransform = new Transform();
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
-        gameObjectHandlerSystem.Add(this);
+        transform = new Transform();
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        gameObjectHandlerSystem.add(this);
     }
 
     protected void finalize()
     {
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
-        gameObjectHandlerSystem.Remove(this);
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        gameObjectHandlerSystem.remove(this);
     }
 
-    public boolean IsEnabled() {
-        return mIsEnabled;
+    public boolean isEnabled() {
+        return isEnabled;
     }
 
-    public void SetEnabled(boolean value) {
-        mIsEnabled = value;
+    public void setEnabled(boolean value) {
+        isEnabled = value;
     }
 
-    public GameObjectTag GetGameObjectTag() {
-        return mGameObjectTag;
+    public GameObjectTag getGameObjectTag() {
+        return gameObjectTag;
     }
 
-    public void OnUpdate(final double deltaTime) {
-        if(mIsEnabled) {
-            Update(deltaTime);
+    public void onUpdate(final double deltaTime) {
+        if(isEnabled) {
+            update(deltaTime);
         }
     }
 
-    public void OnRender(final Graphics graphicsDevice) {
-        if(mIsEnabled) {
-            Render(graphicsDevice);
+    public void onRender(final Graphics graphicsDevice) {
+        if(isEnabled) {
+            render(graphicsDevice);
         }
     }
 
-    public Transform GetTransform() {
-        return mTransform;
+    public Transform getTransform() {
+        return transform;
     }
 
-    protected abstract void Update(final double deltaTime);
-    protected abstract void Render(final Graphics graphicsDevice);
+    protected abstract void update(final double deltaTime);
+    protected abstract void render(final Graphics graphicsDevice);
 }

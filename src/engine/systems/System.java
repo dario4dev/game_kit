@@ -1,13 +1,13 @@
 package engine.systems;
 public abstract class System {
 
-    protected int mId;
+    protected int id;
 
     public System(final int id) {
-        mId = id;
+        this.id = id;
     }
 
-    public int GetId() {
-        return mId;
+    public int getId() {
+        return id;
     }
 }

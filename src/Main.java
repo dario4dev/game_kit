@@ -1,20 +1,18 @@
-import engine.Engine;
 import engine.EngineInitialiser;
-import engine.systems.GameObjectHandlerSystem;
 
 public class Main {
     public static void main(String args[]) {
 
         //Initialise Engine
-        EngineInitialiser.Init();
+        EngineInitialiser.init();
 
         //Initialise game
         YourGame yourGame = new YourGame(new YourGameWindowProperties());
         //Initialise Game Systems
-        yourGame.InitialiseSystems();
+        yourGame.initialiseSystems();
         //Initialise Game Components
-        yourGame.InitialiseComponents();
+        yourGame.initialiseComponents();
 
-        yourGame.Start();
+        yourGame.startGame();
     }
 }

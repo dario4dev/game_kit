@@ -4,60 +4,58 @@ import engine.systems.InputSystem;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.nio.Buffer;
 
 public abstract class Game extends Canvas implements Runnable {
 
-    private final Window mWindow;
-    private Thread mThread;
-    private boolean mIsRunning = false;
-    private int mNumBuffers = 3;
+    private final Window window;
+    private Thread thread;
+    private boolean isRunning = false;
+    private int numBuffers = 3;
 
     public Game(IGameWindowProperties windowProperties) {
-        mNumBuffers = windowProperties.getNumBuffers();
-        mWindow = new Window(new Dimension(windowProperties.getWidth(), windowProperties.getHeight()), windowProperties.getTitle(), this);
-
+        numBuffers = windowProperties.getNumBuffers();
+        window = new Window(new Dimension(windowProperties.getWidth(), windowProperties.getHeight()), windowProperties.getTitle(), this);
     }
 
-    public abstract void InitialiseSystems();
-    public abstract void DeinitialiseSystems();
-    public abstract void InitialiseComponents();
-    public abstract void DeinitialiseComponents();
+    public abstract void initialiseSystems();
+    public abstract void deInitialiseSystems();
+    public abstract void initialiseComponents();
+    public abstract void deInitialiseComponents();
 
-    protected int GetScreenScreenWidth() {
-        return mWindow.mframe.getWidth();
+    protected int getScreenScreenWidth() {
+        return window.frame.getWidth();
     }
-    protected int GetScreenScreenHeight() {
-        return mWindow.mframe.getHeight();
+    protected int getScreenScreenHeight() {
+        return window.frame.getHeight();
     }
 
-    public void Start() {
+    public void startGame() {
         start();
     }
-    public void Stop() {
+    public void stopGame() {
         stop();
     }
 
     private synchronized void start() {
-        if(mIsRunning) return;
+        if(isRunning) return;
 
-        mThread = new Thread(this);
-        mThread.start();
-        mIsRunning = true;
-        InputSystem inputSystem = Engine.Get().GetSystem(InputSystem.GetSystemId());
+        thread = new Thread(this);
+        thread.start();
+        isRunning = true;
+        InputSystem inputSystem = Engine.Get().getSystem(InputSystem.getSystemId());
         this.addKeyListener(inputSystem);
     }
 
     private  synchronized void stop() {
-        if(!mIsRunning) return;
+        if(!isRunning) return;
 
         try {
-            mThread.join();
+            thread.join();
         } catch(InterruptedException exception) {
             exception.printStackTrace();
         }
-        mIsRunning = false;
-        InputSystem inputSystem = Engine.Get().GetSystem(InputSystem.GetSystemId());
+        isRunning = false;
+        InputSystem inputSystem = Engine.Get().getSystem(InputSystem.getSystemId());
         this.removeKeyListener(inputSystem);
     }
 
@@ -71,15 +69,15 @@ public abstract class Game extends Canvas implements Runnable {
         long timer = System.currentTimeMillis();
         int frames = 0;
 
-        while(mIsRunning) {
+        while(isRunning) {
             final long currentFrameTime = System.nanoTime();
             delta += (currentFrameTime - previousFrameTime) / ns;
             previousFrameTime = currentFrameTime;
             while(delta >= 1) {
-                Update(delta);
+                update(delta);
                 --delta;
             }
-            Render();
+            render();
             ++frames;
             if(System.currentTimeMillis() - timer > 1000) {
                 timer+=1000;
@@ -89,21 +87,21 @@ public abstract class Game extends Canvas implements Runnable {
         stop();
     }
 
-    private void Update(final double deltaTime) {
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
-        gameObjectHandlerSystem.Update(deltaTime);
+    private void update(final double deltaTime) {
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        gameObjectHandlerSystem.update(deltaTime);
     }
 
-    private void Render() {
+    private void render() {
         BufferStrategy bufferStrategy = getBufferStrategy();
         if(bufferStrategy == null) {
-            createBufferStrategy(mNumBuffers);
+            createBufferStrategy(numBuffers);
             return;
         }
         Graphics graphicsDevice = bufferStrategy.getDrawGraphics();
-        graphicsDevice.clearRect(0,0, GetScreenScreenWidth(), GetScreenScreenHeight());
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().GetSystem(GameObjectHandlerSystem.GetSystemId());
-        gameObjectHandlerSystem.Render(graphicsDevice);
+        graphicsDevice.clearRect(0,0, getScreenScreenWidth(), getScreenScreenHeight());
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        gameObjectHandlerSystem.render(graphicsDevice);
 
         graphicsDevice.dispose();
         bufferStrategy.show();

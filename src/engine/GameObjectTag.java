@@ -1,13 +1,13 @@
 package engine;
 
 public class GameObjectTag {
-    private final int mTag;
+    private final int tag;
 
     public GameObjectTag(final String classInfo) {
-        mTag = classInfo.hashCode();
+        tag = classInfo.hashCode();
     }
 
-    int GetTag() {
-       return mTag;
+    int getTag() {
+       return tag;
     }
 }

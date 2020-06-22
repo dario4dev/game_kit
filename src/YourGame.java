@@ -5,22 +5,22 @@ public class YourGame extends Game {
     }
 
     @Override
-    public void InitialiseSystems() {
+    public void initialiseSystems() {
 
     }
 
     @Override
-    public void DeinitialiseSystems() {
+    public void deInitialiseSystems() {
 
     }
 
     @Override
-    public void InitialiseComponents() {
+    public void initialiseComponents() {
 
     }
 
     @Override
-    public void DeinitialiseComponents() {
+    public void deInitialiseComponents() {
 
     }
 }

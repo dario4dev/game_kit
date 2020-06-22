@@ -2,40 +2,41 @@ package engine;
 
 import engine.systems.System;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Engine {
-    private HashMap<Integer, System> mSystems;
-    private static Engine mInstance;
+    private Map<Integer, System> systems;
+    private static Engine instance;
 
     public static Engine Get() {
-        if(mInstance == null) {
-            mInstance = new Engine();
+        if(instance == null) {
+            instance = new Engine();
         }
-        return mInstance;
+        return instance;
     }
 
     private Engine() {
-        mSystems = new HashMap<Integer, System>();
+        systems = new HashMap<Integer, System>();
     }
-    public <T extends System> T GetSystem(final int id) {
-       System system = mSystems.get(id);
+    public <T extends System> T getSystem(final int id) {
+       System system = systems.get(id);
        assert (system != null) : "System must be not null!";
        return (T) system;
     }
 
-    public <T extends System> void AddSystem(System system) {
-        if (!mSystems.containsKey(system.GetId())) {
-            mSystems.put(system.GetId(), system);
+    public <T extends System> void addSystem(System system) {
+        if (!systems.containsKey(system.getId())) {
+            systems.put(system.getId(), system);
         }
     }
 
-    public void RemoveSystem(final int id) {
-        if (mSystems.containsKey(id)) {
-            mSystems.remove(id);
+    public void removeSystem(final int id) {
+        if (systems.containsKey(id)) {
+            systems.remove(id);
         }
     }
 
-    public void RemoveAllSystems() {
-        mSystems.clear();
+    public void removeAllSystems() {
+        systems.clear();
     }
 }

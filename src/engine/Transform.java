@@ -2,6 +2,7 @@ package engine;
 
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Transform {
 
@@ -10,76 +11,76 @@ public class Transform {
         public static final int Y = 1;
     }
 
-    private AffineTransform mAffineTransform;
-    private ArrayList<Double> mPosition2D;
-    private ArrayList<Double> mScale2D;
+    private AffineTransform affineTransform;
+    private List<Double> position2D;
+    private List<Double> scale2D;
 
     public Transform(){
-        mAffineTransform = new AffineTransform();
-        mPosition2D = new ArrayList<>(2);
+        affineTransform = new AffineTransform();
+        position2D = new ArrayList<>(2);
     }
 
     // Getter/Setter Translation
-    public ArrayList<Double> GetPosition2D() {
-        mPosition2D.set(DIMENSION_2D.X, mAffineTransform.getTranslateX());
-        mPosition2D.set(DIMENSION_2D.Y, mAffineTransform.getTranslateY());
+    public List<Double> getPosition2D() {
+        position2D.set(DIMENSION_2D.X, affineTransform.getTranslateX());
+        position2D.set(DIMENSION_2D.Y, affineTransform.getTranslateY());
 
-        return mPosition2D;
+        return position2D;
     }
 
-    public Double GetPositionX() {
-        return mAffineTransform.getTranslateX();
+    public Double getPositionX() {
+        return affineTransform.getTranslateX();
     }
 
-    public Double GetPositionY() {
-        return mAffineTransform.getTranslateY();
+    public Double getPositionY() {
+        return affineTransform.getTranslateY();
     }
 
-    public void SetPosition(final double x, final double y) {
-        mAffineTransform.translate(x, y);
+    public void setPosition(final double x, final double y) {
+        affineTransform.translate(x, y);
     }
 
-    public void SetPositionX(final double x) {
-        mAffineTransform.translate(x, mAffineTransform.getTranslateY());
+    public void setPositionX(final double x) {
+        affineTransform.translate(x, affineTransform.getTranslateY());
     }
 
-    public void SetPositionY(final double y) {
-        mAffineTransform.translate(mAffineTransform.getTranslateX(), y);
+    public void setPositionY(final double y) {
+        affineTransform.translate(affineTransform.getTranslateX(), y);
     }
 
-    public void SetPosition(final ArrayList<Double> position2D) {
-        mAffineTransform.translate(position2D.get(DIMENSION_2D.X), position2D.get(DIMENSION_2D.Y));
+    public void setPosition(final List<Double> position2D) {
+        affineTransform.translate(position2D.get(DIMENSION_2D.X), position2D.get(DIMENSION_2D.Y));
     }
 
     //Getter setter Scale
-    public ArrayList<Double> GetScale() {
-        mScale2D.set(DIMENSION_2D.X, mAffineTransform.getScaleX());
-        mScale2D.set(DIMENSION_2D.Y, mAffineTransform.getScaleY());
-        return mScale2D;
+    public List<Double> getScale() {
+        scale2D.set(DIMENSION_2D.X, affineTransform.getScaleX());
+        scale2D.set(DIMENSION_2D.Y, affineTransform.getScaleY());
+        return scale2D;
     }
 
-    public Double GetScaleX() {
-        return mAffineTransform.getScaleX();
+    public Double getScaleX() {
+        return affineTransform.getScaleX();
     }
 
-    public Double GetScaleY() {
-        return mAffineTransform.getScaleY();
+    public Double getScaleY() {
+        return affineTransform.getScaleY();
     }
 
-    public void SetScale(final Double x, final Double y) {
-        mAffineTransform.scale(x, y);
+    public void setScale(final Double x, final Double y) {
+        affineTransform.scale(x, y);
     }
 
-    public void SetScaleX(final Double x) {
-        mAffineTransform.scale(x, mAffineTransform.getScaleY());
+    public void setScaleX(final Double x) {
+        affineTransform.scale(x, affineTransform.getScaleY());
     }
 
-    public void SetScaleY(final Double y) {
-        mAffineTransform.scale(mAffineTransform.getScaleX(), y);
+    public void setScaleY(final Double y) {
+        affineTransform.scale(affineTransform.getScaleX(), y);
     }
 
-    public void SetScale(final ArrayList<Double> scale2D) {
-        mAffineTransform.scale(scale2D.get(DIMENSION_2D.X), scale2D.get(DIMENSION_2D.Y));
+    public void setScale(final List<Double> scale2D) {
+        affineTransform.scale(scale2D.get(DIMENSION_2D.X), scale2D.get(DIMENSION_2D.Y));
     }
 
     //Getter/Setter Rotations Todo @Dario later.

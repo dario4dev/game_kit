@@ -1,49 +1,42 @@
 package engine.systems;
-import engine.GameObject;
-import engine.GameObjectTag;
 import engine.InputListener;
-
-import javax.swing.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class InputSystem extends System implements KeyListener {
 
-    private HashMap<Integer, LinkedList<InputListener>> mGameObjectsInputMap;
-    private static int mSystemId = "InputSystem".hashCode();
+    private Map<Integer, List<InputListener>> gameObjectsInputMap;
+    private static int systemId = "InputSystem".hashCode();
 
-    public static int GetSystemId() {
-        return mSystemId;
+    public static int getSystemId() {
+        return systemId;
     }
 
     public InputSystem() {
-        super(mSystemId);
-        mGameObjectsInputMap = new HashMap<Integer, LinkedList<InputListener>>();
+        super(systemId);
+        gameObjectsInputMap = new HashMap<Integer, List<InputListener>>();
     }
 
-    public void AddListener(InputListener listener, Integer event) {
-        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(event);
+    public void addListener(InputListener listener, Integer event) {
+        List<InputListener> inputListeners = gameObjectsInputMap.get(event);
         if(inputListeners == null) {
-            inputListeners = new LinkedList<InputListener>();
+            inputListeners = new ArrayList<InputListener>();
             inputListeners.add(listener);
-            mGameObjectsInputMap.put(event, inputListeners);
+            gameObjectsInputMap.put(event, inputListeners);
         } else if(!inputListeners.contains(listener)) {
             inputListeners.add(listener);
         }
     }
 
-    public void RemoveListenerFromAllEvents(InputListener listener) {
-        for (HashMap.Entry<Integer, LinkedList<InputListener>> entry : mGameObjectsInputMap.entrySet()) {
-            RemoveListener(listener, entry.getKey());
+    public void removeListenerFromAllEvents(InputListener listener) {
+        for (Map.Entry<Integer, List<InputListener>> entry : gameObjectsInputMap.entrySet()) {
+            removeListener(listener, entry.getKey());
         }
     }
 
-    public void RemoveListener(InputListener listener, Integer event) {
-        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(event);
+    public void removeListener(InputListener listener, Integer event) {
+        List<InputListener> inputListeners = gameObjectsInputMap.get(event);
         if(inputListeners == null) {
             return;
         }
@@ -51,7 +44,7 @@ public class InputSystem extends System implements KeyListener {
         inputListeners.remove(listener);
 
         if(inputListeners.isEmpty()) {
-            mGameObjectsInputMap.remove(inputListeners);
+            gameObjectsInputMap.remove(event);
         }
     }
 
@@ -62,20 +55,20 @@ public class InputSystem extends System implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e.getKeyCode());
+        List<InputListener> inputListeners = gameObjectsInputMap.get(e.getKeyCode());
         if(inputListeners != null) {
             for(InputListener inputListener : inputListeners) {
-                inputListener.KeyPressed(e.getKeyCode());
+                inputListener.keyPressed(e.getKeyCode());
             }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        LinkedList<InputListener> inputListeners = mGameObjectsInputMap.get(e.getKeyCode());
+        List<InputListener> inputListeners = gameObjectsInputMap.get(e.getKeyCode());
         if(inputListeners != null) {
             for(InputListener inputListener : inputListeners) {
-                inputListener.KeyReleased(e.getKeyCode());
+                inputListener.keyReleased(e.getKeyCode());
             }
         }
     }
