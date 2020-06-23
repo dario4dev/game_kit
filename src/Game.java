@@ -42,7 +42,7 @@ public abstract class Game extends Canvas implements Runnable {
         thread = new Thread(this);
         thread.start();
         isRunning = true;
-        InputSystem inputSystem = Engine.Get().getSystem(InputSystem.getSystemId());
+        InputSystem inputSystem = Engine.get().getSystem(InputSystem.getSystemId());
         this.addKeyListener(inputSystem);
     }
 
@@ -55,7 +55,7 @@ public abstract class Game extends Canvas implements Runnable {
             exception.printStackTrace();
         }
         isRunning = false;
-        InputSystem inputSystem = Engine.Get().getSystem(InputSystem.getSystemId());
+        InputSystem inputSystem = Engine.get().getSystem(InputSystem.getSystemId());
         this.removeKeyListener(inputSystem);
     }
 
@@ -88,7 +88,7 @@ public abstract class Game extends Canvas implements Runnable {
     }
 
     private void update(final double deltaTime) {
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         gameObjectHandlerSystem.update(deltaTime);
     }
 
@@ -100,7 +100,7 @@ public abstract class Game extends Canvas implements Runnable {
         }
         Graphics graphicsDevice = bufferStrategy.getDrawGraphics();
         graphicsDevice.clearRect(0,0, getScreenScreenWidth(), getScreenScreenHeight());
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         gameObjectHandlerSystem.render(graphicsDevice);
 
         graphicsDevice.dispose();

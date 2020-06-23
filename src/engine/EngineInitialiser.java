@@ -7,15 +7,15 @@ import engine.systems.InputSystem;
 public class EngineInitialiser {
 
     public static void init(){
-        Engine engine = Engine.Get();
+        Engine engine = Engine.get();
         //Initialise Engine Systems
-        Engine.Get().addSystem(new GameObjectHandlerSystem());
-        Engine.Get().addSystem(new InputSystem());
+        Engine.get().addSystem(new GameObjectHandlerSystem());
+        Engine.get().addSystem(new InputSystem());
     }
 
     public static void deInit() {
-        Engine engine = Engine.Get();
+        Engine engine = Engine.get();
         //Remove Engine Systems
-        Engine.Get().removeAllSystems();
+        Engine.get().removeAllSystems();
     }
 }

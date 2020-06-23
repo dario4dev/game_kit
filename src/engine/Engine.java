@@ -8,7 +8,7 @@ public class Engine {
     private Map<Integer, System> systems;
     private static Engine instance;
 
-    public static Engine Get() {
+    public static Engine get() {
         if(instance == null) {
             instance = new Engine();
         }

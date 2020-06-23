@@ -10,7 +10,7 @@ public class EngineTest {
     public void getSystemFromEngine() {
         System.out.println("Starting test: GetSystemFromEngine");
 
-        Engine gameEngine = Engine.Get();
+        Engine gameEngine = Engine.get();
         //create system
         GameObjectHandlerSystem gameObjectHandlerSystem = new GameObjectHandlerSystem();
 

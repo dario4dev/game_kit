@@ -17,13 +17,13 @@ public abstract class GameObject {
         gameObjectTag = new GameObjectTag(parts[0]);
 
         transform = new Transform();
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         gameObjectHandlerSystem.add(this);
     }
 
     protected void finalize()
     {
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.Get().getSystem(GameObjectHandlerSystem.getSystemId());
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         gameObjectHandlerSystem.remove(this);
     }
 
