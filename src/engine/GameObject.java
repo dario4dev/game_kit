@@ -3,20 +3,41 @@ package engine;
 import engine.systems.GameObjectHandlerSystem;
 
 import java.awt.*;
+import java.util.Objects;
 
 public abstract class GameObject {
 
     private boolean isEnabled = true;
     private Transform transform = null;
     private GameObjectTag gameObjectTag = null;
+    private String name;
+    private static long id = 0;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameObject that = (GameObject) o;
+        return isEnabled == that.isEnabled &&
+                transform.equals(that.transform) &&
+                gameObjectTag.equals(that.gameObjectTag) &&
+                name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isEnabled, transform, gameObjectTag, name);
+    }
 
     public GameObject() {
         //Create unique tag per Class type
         String classId = String.valueOf(this);
         String[] parts = classId.split("@");
         gameObjectTag = new GameObjectTag(parts[0]);
-
         transform = new Transform();
+        name = "GameObject" + id;
+        ++id;
+
         GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         gameObjectHandlerSystem.add(this);
     }
@@ -35,6 +56,16 @@ public abstract class GameObject {
         isEnabled = value;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
+        gameObjectHandlerSystem.add(this);
+        this.name = name;
+    }
+
     public GameObjectTag getGameObjectTag() {
         return gameObjectTag;
     }
@@ -49,6 +80,11 @@ public abstract class GameObject {
         if(isEnabled) {
             render(graphicsDevice);
         }
+    }
+
+    public static GameObject find(String name) {
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
+        return gameObjectHandlerSystem.find(name);
     }
 
     public Transform getTransform() {

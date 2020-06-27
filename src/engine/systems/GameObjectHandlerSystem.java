@@ -9,6 +9,20 @@ import java.util.List;
 public class GameObjectHandlerSystem extends System {
 
     private Map<GameObjectTag, List<GameObject>> gameObjectsMap;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameObjectHandlerSystem that = (GameObjectHandlerSystem) o;
+        return gameObjectsMap.equals(that.gameObjectsMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(gameObjectsMap);
+    }
+
     private static int systemId = "GameObjectHandler".hashCode();
 
     public static int getSystemId() {
@@ -21,27 +35,47 @@ public class GameObjectHandlerSystem extends System {
     }
     
     public void add(GameObject gameObject) {
-        List<GameObject> gameObjectArray = gameObjectsMap.get(gameObject.getGameObjectTag());
-        if(gameObjectArray == null) {
-            gameObjectArray = new ArrayList<GameObject>();
-            gameObjectsMap.put(gameObject.getGameObjectTag(), gameObjectArray);
-            gameObjectArray.add(gameObject);
-        } else if(!gameObjectArray.contains(gameObject)) {
-            gameObjectArray.add(gameObject);
-        }
+
+        gameObjectsMap.computeIfAbsent(gameObject.getGameObjectTag(), (key) -> {
+            return gameObjectsMap.put(gameObject.getGameObjectTag(), new ArrayList<GameObject>(){{add(gameObject);};});
+        });
+
+        gameObjectsMap.computeIfPresent(gameObject.getGameObjectTag(), (key, value) -> {
+            value.add(gameObject);
+            return value;
+        });
+
     }
 
     public void remove(GameObject gameObject) {
-        List<GameObject> gameObjectArray = gameObjectsMap.get(gameObject.getGameObjectTag());
-        if(gameObjectArray == null) {
-           return;
+
+        gameObjectsMap.computeIfPresent(gameObject.getGameObjectTag(), (key, value) -> {
+            value.remove(gameObject);
+            if(value.isEmpty()) {
+                gameObjectsMap.remove(key);
+            }
+            return value;
+        });
+
+    }
+
+    //This function has high complexity in time, avoid using this on update
+    public GameObject find(String gameObjectName) {
+        Iterator it = gameObjectsMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pair = (Map.Entry)it.next();
+            List<GameObject> gameObjectsArray = (List<GameObject>) pair.getValue();
+            GameObject result = gameObjectsArray.stream()
+                    .filter(gameObject -> gameObject.getName() == gameObjectName)
+                    .findAny()
+                    .orElse(null);
+
+            if(result != null) {
+                return result;
+            }
         }
 
-        gameObjectArray.remove(gameObject);
-
-        if(gameObjectArray.isEmpty()) {
-            gameObjectsMap.remove(gameObject.getGameObjectTag());
-        }
+        return null;
     }
 
     public void update(final double deltaTime) {
