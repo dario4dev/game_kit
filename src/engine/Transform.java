@@ -37,19 +37,19 @@ public class Transform {
     }
 
     public void setPosition(final double x, final double y) {
-        affineTransform.translate(x, y);
+        affineTransform.translate(x - affineTransform.getTranslateX(), y - affineTransform.getTranslateY());
     }
 
     public void setPositionX(final double x) {
-        affineTransform.translate(x, affineTransform.getTranslateY());
+        affineTransform.translate(x - affineTransform.getTranslateX(), 0);
     }
 
     public void setPositionY(final double y) {
-        affineTransform.translate(affineTransform.getTranslateX(), y);
+        affineTransform.translate(0, y - affineTransform.getTranslateY());
     }
 
     public void setPosition(final List<Double> position2D) {
-        affineTransform.translate(position2D.get(DIMENSION_2D.X), position2D.get(DIMENSION_2D.Y));
+        affineTransform.translate(position2D.get(DIMENSION_2D.X) - affineTransform.getTranslateX(), position2D.get(DIMENSION_2D.Y) - affineTransform.getTranslateY());
     }
 
     //Getter setter Scale
