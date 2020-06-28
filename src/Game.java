@@ -64,7 +64,7 @@ public abstract class Game extends Canvas implements Runnable {
         this.requestFocus();
         long previousFrameTime = System.nanoTime();
         final double frameRate = 60.0;
-        final double ns = 1000000000 / frameRate;
+        final double ns = 1000000000.0 / frameRate;
         double delta = 0.0;
         long timer = System.currentTimeMillis();
         int frames = 0;
@@ -72,9 +72,10 @@ public abstract class Game extends Canvas implements Runnable {
         while(isRunning) {
             final long currentFrameTime = System.nanoTime();
             delta += (currentFrameTime - previousFrameTime) / ns;
+            final double deltaTime = (currentFrameTime - previousFrameTime) / 1000000.0/frameRate;
             previousFrameTime = currentFrameTime;
             while(delta >= 1) {
-                update(delta);
+                update(deltaTime);
                 --delta;
             }
             render();
