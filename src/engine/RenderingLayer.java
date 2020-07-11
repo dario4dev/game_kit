@@ -2,7 +2,7 @@ package engine;
 
 import java.util.Objects;
 
-public class RenderingLayer {
+public class RenderingLayer implements Comparable<RenderingLayer> {
 
     protected final int order;
 
@@ -32,5 +32,10 @@ public class RenderingLayer {
     @Override
     public int hashCode() {
         return Objects.hash(order);
+    }
+
+    @Override
+    public int compareTo(RenderingLayer o) {
+        return this.order - o.order;
     }
 }

@@ -34,7 +34,7 @@ public class GameObjectHandlerSystem extends System {
     public GameObjectHandlerSystem() {
         super(systemId);
         gameObjectsMap = new HashMap<GameObjectTag, List<GameObject>>();
-        gameObjectsRenderLayerOrderMap = new TreeMap<>();
+        gameObjectsRenderLayerOrderMap = new TreeMap<RenderingLayer, List<GameObjectTag>>();
     }
     
     public void add(GameObject gameObject) {
