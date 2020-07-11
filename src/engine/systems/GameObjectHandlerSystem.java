@@ -1,6 +1,7 @@
 package engine.systems;
 import engine.GameObject;
 import engine.GameObjectTag;
+import engine.RenderingLayer;
 
 import java.awt.*;
 import java.util.*;
@@ -9,6 +10,7 @@ import java.util.List;
 public class GameObjectHandlerSystem extends System {
 
     private Map<GameObjectTag, List<GameObject>> gameObjectsMap;
+    private SortedMap<RenderingLayer, List<GameObjectTag>> gameObjectsRenderLayerOrderMap;
 
     @Override
     public boolean equals(Object o) {
@@ -32,12 +34,13 @@ public class GameObjectHandlerSystem extends System {
     public GameObjectHandlerSystem() {
         super(systemId);
         gameObjectsMap = new HashMap<GameObjectTag, List<GameObject>>();
+        gameObjectsRenderLayerOrderMap = new TreeMap<>();
     }
     
     public void add(GameObject gameObject) {
 
         gameObjectsMap.computeIfAbsent(gameObject.getGameObjectTag(), (key) -> {
-            return gameObjectsMap.put(gameObject.getGameObjectTag(), new ArrayList<GameObject>(){{add(gameObject);};});
+            return gameObjectsMap.put(gameObject.getGameObjectTag(), new ArrayList<GameObject>(){{add(gameObject);}});
         });
 
         gameObjectsMap.computeIfPresent(gameObject.getGameObjectTag(), (key, value) -> {
@@ -45,6 +48,14 @@ public class GameObjectHandlerSystem extends System {
             return value;
         });
 
+        gameObjectsRenderLayerOrderMap.computeIfAbsent(gameObject.getRenderLayer(), (key) -> {
+            return gameObjectsRenderLayerOrderMap.put(key, new ArrayList<GameObjectTag>(){{add(gameObject.getGameObjectTag());}});
+        });
+
+        gameObjectsRenderLayerOrderMap.computeIfPresent(gameObject.getRenderLayer(), (key, value)->{
+            value.add(gameObject.getGameObjectTag());
+            return value;
+        });
     }
 
     public void remove(GameObject gameObject) {
@@ -53,6 +64,8 @@ public class GameObjectHandlerSystem extends System {
             value.remove(gameObject);
             if(value.isEmpty()) {
                 gameObjectsMap.remove(key);
+                List<GameObjectTag> gameObjectTags = gameObjectsRenderLayerOrderMap.get(gameObject.getRenderLayer());
+                gameObjectTags.remove(key);
             }
             return value;
         });
@@ -87,9 +100,12 @@ public class GameObjectHandlerSystem extends System {
     }
 
     public void render(final Graphics graphicsDevice) {
-        for(List<GameObject> gameObjectArray : gameObjectsMap.values()) {
-            for(GameObject gameObject : gameObjectArray) {
-                gameObject.onRender(graphicsDevice);
+        for (List<GameObjectTag> gameObjectTags : gameObjectsRenderLayerOrderMap.values()) {
+            for(GameObjectTag gameObjectTag : gameObjectTags) {
+                List<GameObject> gameObjectArray = gameObjectsMap.get(gameObjectTag);
+                for(GameObject gameObject : gameObjectArray) {
+                    gameObject.onRender(graphicsDevice);
+                }
             }
         }
     }

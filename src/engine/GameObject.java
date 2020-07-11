@@ -13,6 +13,22 @@ public abstract class GameObject {
     private String name;
     private static long id = 0;
 
+    private RenderingLayer renderLayer;
+
+    public GameObject() {
+        //Create unique tag per Class type
+        String classId = String.valueOf(this);
+        String[] parts = classId.split("@");
+        gameObjectTag = new GameObjectTag(parts[0]);
+        transform = new Transform();
+        name = "GameObject" + id;
+        ++id;
+
+        renderLayer = new RenderingLayer(0);
+        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
+        gameObjectHandlerSystem.add(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,19 +43,6 @@ public abstract class GameObject {
     @Override
     public int hashCode() {
         return Objects.hash(isEnabled, transform, gameObjectTag, name);
-    }
-
-    public GameObject() {
-        //Create unique tag per Class type
-        String classId = String.valueOf(this);
-        String[] parts = classId.split("@");
-        gameObjectTag = new GameObjectTag(parts[0]);
-        transform = new Transform();
-        name = "GameObject" + id;
-        ++id;
-
-        GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
-        gameObjectHandlerSystem.add(this);
     }
 
     protected void finalize()
@@ -70,6 +73,14 @@ public abstract class GameObject {
         return gameObjectTag;
     }
 
+    public RenderingLayer getRenderLayer() {
+        return renderLayer;
+    }
+
+    public void setRenderLayer(RenderingLayer renderLayer) {
+        this.renderLayer = renderLayer;
+    }
+
     public void onUpdate(final double deltaTime) {
         if(isEnabled) {
             update(deltaTime);
@@ -86,6 +97,7 @@ public abstract class GameObject {
         GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         return gameObjectHandlerSystem.find(name);
     }
+
 
     public Transform getTransform() {
         return transform;
