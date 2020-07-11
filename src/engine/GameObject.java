@@ -16,6 +16,10 @@ public abstract class GameObject {
     private RenderingLayer renderLayer;
 
     public GameObject() {
+        this(new RenderingLayer(0));
+    }
+
+    public GameObject(final RenderingLayer renderLayer) {
         //Create unique tag per Class type
         String classId = String.valueOf(this);
         String[] parts = classId.split("@");
@@ -24,7 +28,7 @@ public abstract class GameObject {
         name = "GameObject" + id;
         ++id;
 
-        renderLayer = new RenderingLayer(0);
+        this.renderLayer = renderLayer;
         GameObjectHandlerSystem gameObjectHandlerSystem = Engine.get().getSystem(GameObjectHandlerSystem.getSystemId());
         gameObjectHandlerSystem.add(this);
     }
@@ -78,6 +82,7 @@ public abstract class GameObject {
     }
 
     public void setRenderLayer(RenderingLayer renderLayer) {
+
         this.renderLayer = renderLayer;
     }
 
