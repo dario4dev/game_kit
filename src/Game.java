@@ -107,6 +107,5 @@ public abstract class Game extends Canvas implements Runnable {
 
         graphicsDevice.dispose();
         bufferStrategy.show();
-
     }
 }
