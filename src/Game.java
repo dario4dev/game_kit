@@ -72,9 +72,10 @@ public abstract class Game extends Canvas implements Runnable {
         while(isRunning) {
             final long currentFrameTime = System.nanoTime();
             delta += (currentFrameTime - previousFrameTime) / ns;
-            final double deltaTime = (currentFrameTime - previousFrameTime) / 1000000.0/frameRate;
+            double deltaTime = (currentFrameTime - previousFrameTime) / 1000000.0/frameRate;
             previousFrameTime = currentFrameTime;
             while(delta >= 1) {
+                deltaTime = Math.min(delta, 1.0/frameRate);
                 update(deltaTime);
                 --delta;
             }
